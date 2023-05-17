@@ -1,0 +1,28 @@
+package com.yedam.API;
+
+public class ClassExample {
+	//0516 32번
+	public static void main(String[] args) throws Exception {
+		//class 정보 얻기
+		Class clazz = Member.class;
+		System.out.println("class 정보 : " + clazz);
+		
+		//클래스 경로 입력해서 정보 얻기
+		clazz = Class.forName("com.yedam.API.Member"); //이 파일이 있으면 가져와라
+		System.out.println(clazz);
+		
+		//객체를 통한 정보 얻기
+		Member member = new Member("또오치");
+		clazz = member.getClass();
+		System.out.println(clazz);
+		
+		System.out.println(clazz.getName());
+		System.out.println(clazz.getSimpleName());
+		System.out.println(clazz.getPackageName());
+		System.out.println(clazz.getPackage().getName());
+		
+		//절 대 경 로
+		String photoPath = clazz.getResource("cat.jpg").getPath();
+		System.out.println(photoPath);
+	}
+}
