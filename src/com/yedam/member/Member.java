@@ -3,8 +3,9 @@ package com.yedam.member;
 public class Member {
 	private String memberId;
 	private String memberPw;
-	private String memberName;
-	private String memberAuth;
+	private String memberPhone;
+	private String memberAddr;
+	private String memberGrade;
 	
 	public String getMemberId() {
 		return memberId;
@@ -18,18 +19,22 @@ public class Member {
 	public void setMemberPw(String memberPw) {
 		this.memberPw = memberPw;
 	}
-	public String getMemberName() {
-		return memberName;
+	public String getMemberPhone() {
+		return memberPhone;
 	}
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
 	}
-	public String getMemberAuth() {
-		return memberAuth;
+	public String getMemberAddr() {
+		return memberAddr;
 	}
-	public void setMemberAuth(String memberAuth) {
-		this.memberAuth = memberAuth;
+	public void setMemberAddr(String memberAddr) {
+		this.memberAddr = memberAddr;
 	}
-	
-	
+	public String getMemberGrade() {
+		return memberGrade;
+	}
+	public void setMemberGrade(String memberGrade) {
+		this.memberGrade = memberGrade;
+	}
 }
