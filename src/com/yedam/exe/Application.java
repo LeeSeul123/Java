@@ -2,46 +2,31 @@ package com.yedam.exe;
 
 import java.util.Scanner;
 
-import com.yedam.member.MemberService;
+import com.yedam.store.StoreService;
 
 public class Application {
-	
 	Scanner sc = new Scanner(System.in);
-	MemberService ms = new MemberService();
+	
 	public Application() {
 		run();
 	}
-
+	
 	private void run() {
+		StoreService ss = new StoreService();
 		while(true) {
-			System.out.println("1. 로그인 | 2. 종료");
+			System.out.println("1. 모든 가게 정보 조회 | 2. 지역구별 매출 조회 | 3.가게 정보 입력 | 4. 매출 수정");
 			int menu = Integer.parseInt(sc.nextLine());
-			if(menu == 1) {
-				//로그인 기능
-				
-				//로그인 한 정보를 토대로 업무를 나눔(고객/은행원)
-				if(MemberService.memberInfo == null) {
-					ms.login();
-				} else {
-					
-					//로그인 한 정보를 토대로 업무를 나눔(고객(N)/은행원(B))
-					if(MemberService.memberInfo.getMemberAuth().equals("N")) {
-						//고객
-						new MemberApp();
-					} else if(MemberService.memberInfo.getMemberAuth().equals("N")) {
-						//은행원
-						new AccountApp();
-					}
-				}
-			} else if(menu == 2){
-				System.out.println("은행 업무 종료");
-				break;
-			} else {
-				System.out.println("없는 메뉴 선택!");
+			
+			if(menu ==1) {
+				ss.getStoreList();
+			} else if(menu ==2) {
+				ss.getStoreSales();
+			} else if(menu == 3) {
+				ss.insertStore();
+			} else if(menu ==4) {
+				ss.updateSales();
 			}
 		}
-		
-		
 		
 	}
 }
