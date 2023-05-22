@@ -2,45 +2,51 @@ package com.yedam.exe;
 
 import java.util.Scanner;
 
-import com.yedam.member.MemberService;
+import com.yedam.coffee.CoffeeService;
 
 public class Application {
-	
 	Scanner sc = new Scanner(System.in);
-	MemberService ms = new MemberService();
-	public Application() {
-		run();
+	String selectNo = "";
+	CoffeeService cs = new CoffeeService();
+	
+	Application(){
+		boolean run = true;
+		while(run) {
+			menu();
+			
+			switch(selectNo) {
+			case "1":
+				cs.getCoffeeList();
+				break;
+			case "2":
+				cs.getCoffee();
+				break;
+			case "3":
+				cs.insertMenu();
+				break;
+			case "4":
+				cs.saleCoffe();
+				break;
+			case "5":
+				cs.deleteCoffee();
+				break;
+			case "6":
+				cs.totalSale();
+				break;
+			case "7":
+				System.out.println("end of prog");
+				run = false;
+				break;
+			default :
+				System.out.println("번호를 잘못 입력하였습니다. 1~7번 사이로 입력해주세요");
+			}
+		}
+		
 	}
 
-	private void run() {
-		while(true) {
-			if(MemberService.memberInfo == null ) {
-				System.out.println("1. 로그인 | 2. 종료");
-				int menu = Integer.parseInt(sc.nextLine());
-				if(menu == 1) {
-					//로그인 기능
-					
-					//로그인 한 정보를 토대로 업무를 나눔(고객/은행원)
-					
-						ms.login();
-					
-				} else if(menu == 2){
-					System.out.println("은행 업무 종료");
-					break;
-				} else {
-					System.out.println("없는 메뉴 선택!");
-				}
-			}
-			if(MemberService.memberInfo != null) {
-				//로그인 한 정보를 토대로 업무를 나눔(고객(N)/은행원(B))
-				if(MemberService.memberInfo.getMemberAuth().equals("N")) {
-					//고객
-					new MemberApp();
-				} else if(MemberService.memberInfo.getMemberAuth().equals("B")) {
-					//은행원
-					new AccountApp();
-				}
-			}		
-		}
+	private void menu() {
+		System.out.println("1. 메뉴 조회 | 2. 메뉴 상세 조회 | 3.메뉴 등록 | 4. 판매 | 5. 메뉴 삭제 | 6. 매출 | 7. 종료");
+		System.out.println("메뉴 입력>");
+		selectNo = sc.nextLine();
 	}
 }
