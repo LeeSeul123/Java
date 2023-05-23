@@ -1,42 +1,38 @@
 package com.yedam.member;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.yedam.common.DAO;
 
-public class MemberDAO extends DAO {
-	private static MemberDAO memberDao = null;
+public class MemberDAO extends DAO{
+	private static MemberDAO mDao = null;
 	
 	private MemberDAO() {
 		
 	}
 	
 	public static MemberDAO getInstance() {
-		if(memberDao == null) {
-			memberDao = new MemberDAO();
+		if(mDao == null) {
+			mDao = new MemberDAO();
 		}
-		return memberDao;
+		return mDao;
 	}
 	
-	//로그인 기능
-	public Member login(String id) {
+	//로그인
+	public Member login(String MemberId) {
 		Member member = null;
 		try {
 			conn();
 			String sql = "SELECT * FROM member WHERE member_id = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setString(1, MemberId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				member = new Member();
-				member.setMemberId(id);
-				member.setMemberName(rs.getString("member_name"));
+				member.setMemberId(rs.getString("member_id"));
 				member.setMemberPw(rs.getString("member_pw"));
 				member.setMemberAuth(rs.getString("member_auth"));
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			disconn();
@@ -44,36 +40,29 @@ public class MemberDAO extends DAO {
 		return member;
 	}
 	
-	//고객 계좌 정보 조회 - 고객이 로그인이 되어 있다.
-	public List<Member> getAccountInfo(){  //계좌가 여러개일수도 있음
-		List<Member> list = new ArrayList<>();
-		Member member = null;
-		
+	//회원가입
+	public int insertMember(Member member, String who) {
+		int result = 0;
 		try {
 			conn();
-			String sql = "SELECT a.member_id, a.account_id, a.account_balance, m.member_name, m.member_auth\r\n"
-					+ "FROM account a JOIN member m\r\n"
-					+ "ON a.member_id = m.member_id\r\n"
-					+ "WHERE a.member_id = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, MemberService.memberInfo.getMemberId());
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				member = new Member();
-				member.setMemberId(rs.getString("member_id"));
-				member.setAccountId(rs.getString("account_id"));
-				member.setAccountBalance(rs.getInt("account_balance"));
-				member.setMemberName(rs.getString("member_name"));
-				member.setMemberAuth(rs.getString("member_auth"));
-				
-				list.add(member);
+			String sql = "";
+			if(who.equals("2")) {
+				sql = "INSERT INTO member VALUES(?,?,'S')";
+			} else {
+				sql = "INSERT INTO member VALUES(?,?,'P')";
 			}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPw());
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			disconn();
 		}
-		return list;
+		
+		return result;
 	}
+	
+	
 }
