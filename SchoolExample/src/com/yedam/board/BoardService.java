@@ -170,9 +170,11 @@ public class BoardService {
 	
 	//게시판 틀
 	public void getStartTle() {
-		System.out.println("┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-		System.out.println("│                                                   게 시 판 😀                                                            │");
-		System.out.println("│  no  |        제목        |                       내용                       |댓글수|조회수|  작성자id  |     작성일자     |추천수|");
+		System.out.println("┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+		System.out.println("│                                                   게 시 판 😀                                                   |         │");
+		System.out.println("|  no     제목                  내용                                        댓글수 조회수  작성자 id   작성일자   추천수   |");
+		System.out.println("===========================================================================================================================");
+		//System.out.println("│  no  |        제목        |                       내용                       |댓글수|조회수|  작성자id  |     작성일자     |추천수|");
 	}
 		
 	//게시판의 내용출력
@@ -182,23 +184,78 @@ public class BoardService {
 			System.out.println("등록된 게시글이 없습니다.");
 		} else {
 			for(int i=0; i<list.size(); i++) {
-				System.out.printf("| %3s  ", i+1);
-				System.out.printf("| %-16s", list.get(i).getTitle());
+				System.out.printf("| %2s  ", i+1);
+				
+				
+				//영어만 있으면 16자
+				String title = "";
+				
+//				if(list.get(i).getTitle().length() > 11) {
+//					title = list.get(i).getTitle().substring(0, 11) + "..";
+//					
+//				} else {
+//					title = list.get(i).getTitle();
+//				}
+				int korean = 0;
+				for(int j=0; j<list.get(i).getTitle().length(); j++) {
+					
+					if((list.get(i).getTitle().charAt(j) > 'a' && list.get(i).getTitle().charAt(j) < 'z') || (list.get(i).getTitle().charAt(j) > 'A' && list.get(i).getTitle().charAt(j) < 'Z') || (list.get(i).getTitle().charAt(j) > '0' && list.get(i).getTitle().charAt(j) < '9')) {
+						//한글이 아닐때
+					} else {
+						korean = korean + 1;
+					}
+				}
+				if(korean >= 11) {
+					title = list.get(i).getTitle().substring(0, 11) + "..";
+					System.out.print("  " + title);
+				} else if(korean == 10) {
+					System.out.printf("  %-7s   ",list.get(i).getTitle());
+				} else if(korean == 9) {
+					System.out.printf("  %-8s   ", list.get(i).getTitle());
+				} else if(korean == 8) {
+					System.out.printf("  %-9s   ", list.get(i).getTitle());
+				} else if(korean ==7) {
+					System.out.printf("  %-10s   ", list.get(i).getTitle());
+				} else if(korean == 6) {
+					System.out.printf("  %-11s   ", list.get(i).getTitle());
+				} else if(korean == 5) {
+					System.out.printf("  %-12s   ", list.get(i).getTitle());
+				} else if(korean == 4) {
+					System.out.printf("  %-13s   ", list.get(i).getTitle());
+				} else if(korean == 3) {
+					System.out.printf("  %-14s   ", list.get(i).getTitle());
+				} else if(korean == 2) {
+					System.out.printf("  %-15s   ", list.get(i).getTitle());
+				} else if(korean == 1) {
+					System.out.printf("  %-16s   ", list.get(i).getTitle());
+				} else if(korean == 0) {
+					if(list.get(i).getTitle().length() > 16) {
+						title = list.get(i).getTitle().substring(0, 16) + "..";
+						System.out.printf("  " + title);
+					} else {
+						System.out.printf("  %-18s   ", list.get(i).getTitle());												
+					}
+					
+				}
+				
+				
+				
 				//글자수가 44개를초과시 ...으로 표시하는 if문 작성
-				System.out.printf("| %-44s", list.get(i).getContent());
+				System.out.printf(" %-46s", list.get(i).getContent());
 				//댓글수 나중에 11을 수정 
-				System.out.printf("| %3s", getCountReply(list.get(i).getBoardNum()));
-				System.out.printf("| %4s", list.get(i).getViewCnt());
-				System.out.printf("| %-10s", list.get(i).getWriterId());
-				System.out.printf("|   %-10s   ", list.get(i).getWrDate());
-				System.out.printf("| %3s|", list.get(i).getRecommend());
+				System.out.printf(" %-3s", getCountReply(list.get(i).getBoardNum()));
+				System.out.printf(" %-3s", list.get(i).getViewCnt());
+				System.out.printf("   %-8s", list.get(i).getWriterId());
+				System.out.printf("   %-10s   ", list.get(i).getWrDate());
+				System.out.printf(" %3s|", list.get(i).getRecommend());
 				System.out.println();
 			}
 				
 		}
 		if(list.size()<BoardInApplication.pageSize) {
 			for(int i=list.size()+1; i<=BoardInApplication.pageSize; i++) {
-				System.out.println("| " + i + "번째 글 없음");
+				System.out.println("| " + i + "번째 글 없음                                                                                                             │");
+				
 			}
 		}
 	}
