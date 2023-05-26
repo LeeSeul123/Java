@@ -1,7 +1,10 @@
 package com.yedam.exe;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.yedam.board.Board;
+import com.yedam.board.BoardDAO;
 import com.yedam.board.BoardService;
 
 public class BoardInApplication {
@@ -21,7 +24,8 @@ public class BoardInApplication {
 		pageSize = Integer.parseInt(sc.nextLine());
 		while(run) {
 			bs.getStartTle();
-			bs.getAllBoard();
+			List<Board> list = BoardDAO.getInstance().getAllBoard();
+			bs.getAllBoard(list);
 			
 			bs.getEndTle();
 			int lastPage = bs.getLastPage();

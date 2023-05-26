@@ -58,17 +58,26 @@ public class BoardDAO extends DAO{
 			String sql = "";
 			content = "%" + content + "%";
 			if(part == 1) {
-				sql = "SELECT * FROM board WHERE title LIKE ?";
+				//sql = "SELECT * FROM board WHERE title LIKE ?";
+				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, content);
+				pstmt.setInt(2, BoardService.currentPage * BoardInApplication.pageSize +1);
+				pstmt.setInt(3, (BoardService.currentPage+1) * BoardInApplication.pageSize);
 			} else if(part == 2) {
-				sql = "SELECT * FROM board WHERE title Like ? OR content LIKE ?";
+				//sql = "SELECT * FROM board WHERE title Like ? OR content LIKE ?";
+				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, content);
 				pstmt.setString(2, content);
+				pstmt.setInt(3, BoardService.currentPage * BoardInApplication.pageSize +1);
+				pstmt.setInt(4, (BoardService.currentPage+1) * BoardInApplication.pageSize);
 			} else {
-				sql = "SELECT * FROM board WHERE writer_id LIKE ?";
+				//sql = "SELECT * FROM board WHERE writer_id LIKE ?";
+				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE writer_id LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
 				pstmt.setString(1, content);
+				pstmt.setInt(2, BoardService.currentPage * BoardInApplication.pageSize +1);
+				pstmt.setInt(3, (BoardService.currentPage+1) * BoardInApplication.pageSize);
 			}
 			
 			rs = pstmt.executeQuery();
@@ -84,12 +93,14 @@ public class BoardDAO extends DAO{
 				board.setRecommend(rs.getInt("recommend"));
 				list.add(board);
 			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			disconn();
 		}
 		return list;
+		
 	}
 	
 	//내가 추천한 글 보기
@@ -198,19 +209,19 @@ public class BoardDAO extends DAO{
 			
 			int result2 = 0;
 			for(int i = boardNum +1; i <= max; i++) {
-				sql = "UPDATE board SET board_num = board_num -1 WHERE board_num >= ?";
+				sql = "UPDATE board SET board_num = board_num -1 WHERE board_num = ?";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, boardNum);
+				pstmt.setInt(1, i);
 				result2 = pstmt.executeUpdate();
 				
-				sql = "UPDATE reply SET board_num = board_num -1 WHERE board_num >= ?";
+				sql = "UPDATE reply SET board_num = board_num -1 WHERE board_num = ?";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, boardNum);
+				pstmt.setInt(1, i);
 				result2 = pstmt.executeUpdate();
 				
-				sql = "UPDATE recommendation SET board_num = board_num -1 WHERE board_num >= ?";
+				sql = "UPDATE recommendation SET board_num = board_num -1 WHERE board_num = ?";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, boardNum);
+				pstmt.setInt(1, i);
 				result2 = pstmt.executeUpdate();
 				
 				
