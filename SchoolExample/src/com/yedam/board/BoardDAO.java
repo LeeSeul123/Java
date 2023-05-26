@@ -50,36 +50,78 @@ public class BoardDAO extends DAO{
 	}
 	
 	//게시글 검색
-	public List<Board> searchBoard(int part, String content){
+//	public List<Board> searchBoard(int part, String content){
+//		List<Board> list = new ArrayList<>();
+//		Board board = null;
+//		try {
+//			conn();
+//			String sql = "";
+//			content = "%" + content + "%";
+//			if(part == 1) {
+//				sql = "SELECT * FROM board WHERE title LIKE ?";
+//				//sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? ORDER BY board_num desc) b) WHERE NUM BETWEEN
+//				pstmt = conn.prepareStatement(sql);
+//				pstmt.setString(1, content);
+//			} else if(part == 2) {
+//				sql = "SELECT * FROM board WHERE title Like ? OR content LIKE ?";
+//				pstmt = conn.prepareStatement(sql);
+//				pstmt.setString(1, content);
+//				pstmt.setString(2, content);
+//			} else {
+//				sql = "SELECT * FROM board WHERE writer_id LIKE ?";
+//				pstmt.setString(1, content);
+//			}
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				board = new Board();
+//				board.setBoardNum(rs.getInt("board_num"));
+//				board.setTitle(rs.getString("title"));
+//				board.setContent(rs.getString("content"));
+//				board.setWriterId(rs.getString("writer_id"));
+//				board.setWrDate(rs.getDate("wr_date"));
+//				board.setViewCnt(rs.getInt("view_cnt"));
+//				board.setRecommend(rs.getInt("recommend"));
+//				list.add(board);
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			disconn();
+//		}
+//		return list;
+//	}
+	
+	//게시글 검색
+	public List<Board> searchBoard(int part, String content) {
 		List<Board> list = new ArrayList<>();
 		Board board = null;
+		
 		try {
 			conn();
 			String sql = "";
 			content = "%" + content + "%";
 			if(part == 1) {
-				//sql = "SELECT * FROM board WHERE title LIKE ?";
-				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, content);
-				pstmt.setInt(2, BoardService.currentPage * BoardInApplication.pageSize +1);
-				pstmt.setInt(3, (BoardService.currentPage+1) * BoardInApplication.pageSize);
+				 sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? ORDER BY board_num DESC)b) WHERE num BETWEEN ? AND ?";
+				 pstmt = conn.prepareStatement(sql);
+				 pstmt.setString(1, content);
+				 pstmt.setInt(2, BoardService.currentPage*5 + 1);
+				 pstmt.setInt(3, BoardService.currentPage*5 + 5);
 			} else if(part == 2) {
-				//sql = "SELECT * FROM board WHERE title Like ? OR content LIKE ?";
-				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
+				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY board_num DESC)b) WHERE num BETWEEN ? AND ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, content);
 				pstmt.setString(2, content);
-				pstmt.setInt(3, BoardService.currentPage * BoardInApplication.pageSize +1);
-				pstmt.setInt(4, (BoardService.currentPage+1) * BoardInApplication.pageSize);
-			} else {
-				//sql = "SELECT * FROM board WHERE writer_id LIKE ?";
-				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE writer_id LIKE ? ORDER BY board_num desc) b) WHERE num BETWEEN ? AND ?";
+				pstmt.setInt(3, BoardService.currentPage*5 + 1);
+				pstmt.setInt(4, BoardService.currentPage*5 + 5);
+			} else if(part == 3) {
+				sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE writer_id LIKE ? ORDER BY board_num DESC)b) WHERE num BETWEEN ? AND ?";
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, content);
-				pstmt.setInt(2, BoardService.currentPage * BoardInApplication.pageSize +1);
-				pstmt.setInt(3, (BoardService.currentPage+1) * BoardInApplication.pageSize);
+				pstmt.setInt(2, BoardService.currentPage*5 + 1);
+				pstmt.setInt(3, BoardService.currentPage*5 + 5);
 			}
-			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -99,8 +141,9 @@ public class BoardDAO extends DAO{
 		} finally {
 			disconn();
 		}
-		return list;
 		
+		return list;
+	
 	}
 	
 	//내가 추천한 글 보기
@@ -423,6 +466,76 @@ public class BoardDAO extends DAO{
 		return lastBoardNum;
 	}
 	
+	//제목 검색 마지막페이지
+	public int getLastPageTitle(String content) {
+		int countNum = 0;
+		content = "%" + content + "%";
+		try {
+			conn();
+			String sql = "SELECT count(board_num) FROM board WHERE title LIKE ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				countNum = rs.getInt("count(board_num)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		
+		return countNum;
+	}
+	
+	//제목+내용 검색 마지막 페이지
+	public int getLastPageTitleContent(String content) {
+		int countNum = 0;
+		content = "%" + content + "%";
+		try {
+			conn();
+			String sql = "SELECT count(board_num) FROM board WHERE title LIKE ? OR content LIKE ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setString(2, content);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				countNum = rs.getInt("count(board_num)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		
+		return countNum;
+	}
+	
+	//작성자 검색
+	public int getLastPageWriterId(String content) {
+		int countNum = 0;
+		content = "%" + content + "%";
+		try {
+			conn();
+			String sql = "SELECT count(board_num) FROM board WHERE writer_id LIKE ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				countNum = rs.getInt("count(board_num)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		
+		return countNum;
+	}
+	
 	
 	//BoardDetail
 	
@@ -446,6 +559,49 @@ public class BoardDAO extends DAO{
 				sql = "SELECT * FROM board WHERE board_num = (SELECT board_num FROM (SELECT ROWNUM num, b.* FROM (SELECT * FROM board ORDER BY wr_date desc)b) WHERE num = ?)";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, BoardService.currentPage * BoardInApplication.pageSize + selectNo);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					board = new Board();
+					board.setBoardNum(rs.getInt("board_num"));
+					board.setTitle(rs.getString("title"));
+					board.setContent(rs.getString("content"));
+					board.setWriterId(rs.getString("writer_id"));
+					board.setWrDate(rs.getDate("wr_date"));
+					board.setViewCnt(rs.getInt("view_cnt"));
+					board.setRecommend(rs.getInt("recommend"));
+					BoardService.currentBoard = board;
+				}
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+			
+		return board;
+	}
+	
+	//상세글 조회1-1 게시글 id로 검색
+	public Board getPost2(int selectNo) {
+		Board board = null;
+		int result = 0;
+			
+		try {
+			conn();
+			String sql = "UPDATE board SET view_cnt = view_cnt + 1 WHERE board_num = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, selectNo);
+			result = pstmt.executeUpdate();
+			
+			if(result == 0) {
+				System.out.println("조회수 수정 실패..");
+			} else {
+				sql = "SELECT * FROM board WHERE board_num = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, selectNo);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
@@ -500,6 +656,8 @@ public class BoardDAO extends DAO{
 		return list;
 		
 	}
+	
+	
 	
 	//상세글 조회3(대댓글 조회)
 	public List<ReReply> getReReply(int commentNum){

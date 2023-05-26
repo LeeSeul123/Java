@@ -5,9 +5,15 @@ import java.util.Scanner;
 import com.yedam.board.BoardService;
 
 public class BoardDetailApplication {
-	int selectNo;
+	int selectNo = 0;
 	Scanner sc= new Scanner(System.in);
 	BoardService bs = new BoardService();
+	int boardNum = 0;
+	
+	BoardDetailApplication(String boardNum){
+		this.boardNum = Integer.parseInt(boardNum);
+		start();
+	}
 	
 	BoardDetailApplication(int selectNo){
 		this.selectNo = selectNo;
@@ -17,7 +23,13 @@ public class BoardDetailApplication {
 	private void start() {
 		boolean run = true;
 		while(run) {
-			bs.getPost(selectNo);
+			if(selectNo == 0) {
+				
+				bs.getPost2(boardNum);
+			} else {
+				bs.getPost(selectNo);
+			}
+			
 			bs.getReply();
 			if(bs.recoCheck()) {
 				System.out.println("1.댓글 입력 | 2.대댓글 입력 | 3.추천 누르기 | 4. 뒤로가기");
@@ -48,6 +60,8 @@ public class BoardDetailApplication {
 			case "4":
 				//뒤로가기
 				run = false;
+				this.selectNo = 0;
+				this.boardNum = 0;
 				BoardService.currentBoard = null;
 				System.out.println("뒤로가기 실행");
 				break;
