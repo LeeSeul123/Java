@@ -27,9 +27,12 @@ public class StudentService {
 		
 		System.out.println("현재 신청 학점 : " + sum);
 		
-		System.out.println("번호를 입력해주세요(겹치는 시간 불가능, 10학점 이상 불가능)>");
-		int subjectId = Integer.parseInt(sc.nextLine());
-		int result = StudentSubjectDAO.getInstance().insertSubject(subjectId);
+		String subjectId = "";
+		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
+			System.out.println("번호를 입력해주세요(겹치는 시간 불가능, 10학점 이상 불가능)>");
+			subjectId = sc.nextLine();
+		}
+		int result = StudentSubjectDAO.getInstance().insertSubject(Integer.parseInt(subjectId));
 		
 		if(result > 0) {
 			System.out.println("수업 등록 성공");
@@ -48,13 +51,18 @@ public class StudentService {
 			System.out.println("없음 😅😅");
 		} else {
 			for(int i=0; i<list.size(); i++) {
-				System.out.print("과목 코드 : " + list.get(i).getSubjectId() + " 과목 명 : " + list.get(i).getSubjectName());
+				System.out.print("과목 코드 : " + list.get(i).getSubjectId() + " / 과목 명 : " + list.get(i).getSubjectName() + "        ");
 			}
 			System.out.println();
 		}
+		System.out.println("삭제할 과목 번호 입력> ");
 		
-		int subjectId = Integer.parseInt(sc.nextLine());
-		int result = StudentSubjectDAO.getInstance().deleteSubject(subjectId);
+		String subjectId = "";
+		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
+			System.out.println("번호를 입력해주세요(겹치는 시간 불가능, 10학점 이상 불가능)>");
+			subjectId = sc.nextLine();
+		}
+		int result = StudentSubjectDAO.getInstance().deleteSubject(Integer.parseInt(subjectId));
 		
 		if(result > 0) {
 			System.out.println("수업 삭제 성공");
@@ -94,7 +102,7 @@ public class StudentService {
 					sum += 2;
 				}
 			}
-			System.out.println("성적 결과가 나온 과목의 수는 " + list2.size() + "개고 지금까지의 평균은 " + sum/list2.size() + "점 입니다.");
+			System.out.println("성적 결과가 나온 과목의 수는 " + list2.size() + "개고 지금까지의 평균은 " + sum/list2.size() + "점 입니다.(A학점 = 4.0 / B학점 = 3.0 / C학점 = 2.0)");
 		}
 	}
 	

@@ -22,9 +22,14 @@ public class SubjectService {
 				System.out.println("과목 코드 : " + list.get(i).getSubjectId() + " 과목 명 : " +list.get(i).getSubjectName());
 			}
 		}
-		System.out.println("수업을 선택해주세요(다른 교수와 중복 불가, 겹치는 시간 불가능)>");
-		int subjectId = Integer.parseInt(sc.nextLine());
-		int result = SubjectDAO.getInstance().insertSubject(subjectId);
+		
+		String subjectId = "";
+		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
+			System.out.println("수업을 선택해주세요(다른 교수와 중복 불가, 겹치는 시간 불가능)>");
+			subjectId = sc.nextLine();
+		}
+		
+		int result = SubjectDAO.getInstance().insertSubject(Integer.parseInt(subjectId));
 		
 		if(result > 0) {
 			System.out.println("수업 등록 성공");
@@ -36,7 +41,7 @@ public class SubjectService {
 	//수업 취소
 	public void deleteSubject() {
 		
-		System.out.print("현재 맡은 수업 > ");
+		System.out.println("현재 맡은 수업 > ");
 		List<Subject> list = SubjectDAO.getInstance().getAllSubject();
 		if(list.size() ==0) {
 			System.out.print("없음");
@@ -46,9 +51,14 @@ public class SubjectService {
 				System.out.println("과목 코드 : " + list.get(i).getSubjectId() + " 과목 명 : " +list.get(i).getSubjectName());
 			}
 		}
-		System.out.println("삭제할 수업의 번호를 입력해주세요>");
-		int subjectId = Integer.parseInt(sc.nextLine());
-		int result = SubjectDAO.getInstance().deleteSubject(subjectId);
+		
+		
+		String subjectId = "";
+		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
+			System.out.println("삭제할 수업의 번호를 입력해주세요>");
+			subjectId = sc.nextLine();
+		}
+		int result = SubjectDAO.getInstance().deleteSubject(Integer.parseInt(subjectId));
 		
 		if(result > 0) {
 			System.out.println("수업 삭제 성공");
@@ -99,14 +109,33 @@ public class SubjectService {
 	
 	//성적 입력
 	public void setGrade() {
-		System.out.println("성적 입력할 과목의 아이디를 입력해주세요 > ");
+		System.out.print("현재 맡은 수업 > ");
+		
+		List<Subject> list2 = SubjectDAO.getInstance().getAllSubject();
+		if(list2.size() ==0) {
+			System.out.print("없음");
+			System.out.println();
+		} else {
+			for(int i=0; i<list2.size(); i++) {
+				
+				
+				System.out.println("과목 코드 : " + list2.get(i).getSubjectId() + " 과목 명 : " +list2.get(i).getSubjectName());
+			}
+		}
+		
+		
+		
 		//본인이 담당한 과목이 맞는지 확인
-		int subjectId = Integer.parseInt(sc.nextLine());
-		Subject subject = SubjectDAO.getInstance().checkSubject(subjectId);
+		String subjectId = "";
+		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
+			System.out.println("성적 입력할 과목의 아이디를 입력해주세요 > ");
+			subjectId = sc.nextLine();
+		}
+		Subject subject = SubjectDAO.getInstance().checkSubject(Integer.parseInt(subjectId));
 		if(subject == null) {
 			System.out.println("교수님께서 맡으신 과목이 아닙니다.");
 		} else {
-			List<StudentSubject> list = SubjectDAO.getInstance().getStudentList(subjectId);
+			List<StudentSubject> list = SubjectDAO.getInstance().getStudentList(Integer.parseInt(subjectId));
 			
 			if(list.size()==0) {
 				System.out.println("이 수업을 등록한 학생이 없습니다.");
@@ -118,13 +147,24 @@ public class SubjectService {
 				System.out.println();
 				System.out.println("성적 입력할 학생의 id를 입력해주세요>");
 				String studentId = sc.nextLine();
+				
+				boolean flag = false;
+				for(int i=0; i<list.size(); i++) {
+					if(list.get(i).getStudentId().equals(studentId)) {
+						flag = true;
+					}
+				}
+				if(!flag) {
+					System.out.println("이 수업을 등록한 학생이 아닙니다.");
+					return;
+				}
 				String studentGrade = "";
 				while(!(studentGrade.equals("A") || studentGrade.equals("B") || studentGrade.equals("C"))) {
 					System.out.println("성적을 입력해주세요(A, B, C중에 선택)");
 					studentGrade = sc.nextLine();
 				}
 				
-				int result = SubjectDAO.getInstance().updateGrade(studentId, studentGrade, subjectId);
+				int result = SubjectDAO.getInstance().updateGrade(studentId, studentGrade, Integer.parseInt(subjectId));
 				if(result > 0) {
 					System.out.println("성적 입력 완료");
 				} else {

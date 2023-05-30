@@ -49,49 +49,7 @@ public class BoardDAO extends DAO{
 		return result;
 	}
 	
-	//게시글 검색
-//	public List<Board> searchBoard(int part, String content){
-//		List<Board> list = new ArrayList<>();
-//		Board board = null;
-//		try {
-//			conn();
-//			String sql = "";
-//			content = "%" + content + "%";
-//			if(part == 1) {
-//				sql = "SELECT * FROM board WHERE title LIKE ?";
-//				//sql = "SELECT * FROM(SELECT ROWNUM num, b.* FROM(SELECT * FROM board WHERE title LIKE ? ORDER BY board_num desc) b) WHERE NUM BETWEEN
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, content);
-//			} else if(part == 2) {
-//				sql = "SELECT * FROM board WHERE title Like ? OR content LIKE ?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, content);
-//				pstmt.setString(2, content);
-//			} else {
-//				sql = "SELECT * FROM board WHERE writer_id LIKE ?";
-//				pstmt.setString(1, content);
-//			}
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				board = new Board();
-//				board.setBoardNum(rs.getInt("board_num"));
-//				board.setTitle(rs.getString("title"));
-//				board.setContent(rs.getString("content"));
-//				board.setWriterId(rs.getString("writer_id"));
-//				board.setWrDate(rs.getDate("wr_date"));
-//				board.setViewCnt(rs.getInt("view_cnt"));
-//				board.setRecommend(rs.getInt("recommend"));
-//				list.add(board);
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			disconn();
-//		}
-//		return list;
-//	}
+
 	
 	//게시글 검색
 	public List<Board> searchBoard(int part, String content) {
@@ -285,7 +243,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT comment_num FROM reply WHERE writer_id= ?";
+			String sql = "SELECT * FROM reply WHERE writer_id= ? AND status = 'O'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, MemberService.memberInfo.getMemberId());
 			rs = pstmt.executeQuery();
@@ -314,14 +272,7 @@ public class BoardDAO extends DAO{
 		try {
 			//대댓글 삭제 -> 댓글 삭제
 			conn();
-			String sql = "DELETE FROM rereply WHERE comment_num = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, commentNum);
-			result = pstmt.executeUpdate();
-			
-			
-			
-			sql = "DELETE FROM reply WHERE comment_num = ?";
+			String sql = "UPDATE reply SET status = 'X' WHERE comment_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, commentNum);
 			result = pstmt.executeUpdate();
@@ -341,7 +292,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT recomment_num FROM rereply WHERE writer_id= ?";
+			String sql = "SELECT * FROM rereply WHERE writer_id= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, MemberService.memberInfo.getMemberId());
 			rs = pstmt.executeQuery();
@@ -434,6 +385,17 @@ public class BoardDAO extends DAO{
 			if(rs.next()) {
 				count = rs.getInt("count(comment_num)+count(recomment_num)");
 			}
+			
+			sql = "SELECT count(comment_num) FROM reply WHERE board_num = ? AND status = 'X'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			rs = pstmt.executeQuery();
+			int minus = 0;
+			if(rs.next()) {
+				minus = rs.getInt("count(comment_num)");
+			}
+			
+			count = count - minus;
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -539,6 +501,32 @@ public class BoardDAO extends DAO{
 	
 	//BoardDetail
 	
+	//글조회 하기전 글이 있는지 체크
+	public Board checkPost(int selectNo) {
+		Board board = null;
+		
+		try {
+			conn();
+			String sql = "SELECT * FROM board WHERE board_num = (SELECT board_num FROM (SELECT ROWNUM num, b.* FROM (SELECT * FROM board ORDER BY wr_date desc)b) WHERE num = ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, BoardService.currentPage * BoardInApplication.pageSize + selectNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				board = new Board();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		
+		return board;
+	}
+	
+	
+	
+	
 	
 	//상세 글조회1(글의 내용. 댓글 등 제외)
 	public Board getPost(int selectNo) {
@@ -633,7 +621,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM reply WHERE board_num = ?";
+			String sql = "SELECT * FROM reply WHERE board_num = ? ORDER BY comment_num";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, BoardService.currentBoard.getBoardNum());
 			rs = pstmt.executeQuery();
@@ -645,6 +633,7 @@ public class BoardDAO extends DAO{
 				reply.setWriterId(rs.getString("writer_id"));
 				reply.setWrDate(rs.getDate("wr_date"));
 				reply.setContent(rs.getString("content"));
+				reply.setStatus(rs.getString("status"));
 				list.add(reply);
 			}
 		} catch(Exception e) {
@@ -666,7 +655,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM rereply WHERE comment_num = ?";
+			String sql = "SELECT * FROM rereply WHERE comment_num = ? ORDER BY recomment_num";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, commentNum);
 			rs = pstmt.executeQuery();
@@ -757,7 +746,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "INSERT INTO reply VALUES((SELECT count(*)+1 FROM reply), ?, ?, sysdate, ?)";
+			String sql = "INSERT INTO reply VALUES((SELECT count(*)+1 FROM reply), ?, ?, sysdate, ?, 'O')";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, BoardService.currentBoard.getBoardNum());
 			pstmt.setString(2, MemberService.memberInfo.getMemberId());

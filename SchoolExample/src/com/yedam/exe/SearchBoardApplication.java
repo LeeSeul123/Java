@@ -36,7 +36,9 @@ public class SearchBoardApplication {
 			//검색 결과
 			
 			//선택메뉴 1.조회할 게시글넘버 입력 2.뒤로가기
-			if(BoardService.currentPage == 0) {
+			if(BoardService.currentPage ==0 && BoardService.currentPage+1 == lastPage) {
+				System.out.println("1.게시글 조회 | 4.뒤로가기");
+			} else if(BoardService.currentPage == 0) {
 				System.out.println("1.게시글 조회 | 2.다음 페이지 | 4.뒤로가기");
 			} else if(BoardService.currentPage+1 == lastPage) {
 				System.out.println("1.게시글 조회 | 3.이전 페이지 | 4.뒤로가기");

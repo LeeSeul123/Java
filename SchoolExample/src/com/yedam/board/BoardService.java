@@ -29,26 +29,7 @@ public class BoardService {
 		}
 	}
 	
-	//게시글 검색
-//	public void searchBoard() {
-//		System.out.println("1. 제목 | 2. 제목+내용 | 3. 작성자 id");
-//		System.out.println("검색할 부분을 선택해주세요 >");
-//		int part = Integer.parseInt(sc.nextLine());
-//		System.out.println("검색할 내용을 선택해주세요 >");
-//		String content = sc.nextLine();
-//		
-//		List<Board> list = BoardDAO.getInstance().searchBoard(part, content);
-//		
-//		if(list.size() == 0) {
-//			System.out.println("등록된 게시글 없음");
-//		} else {
-//			for(int i=0; i<list.size(); i++) {
-//				System.out.println(list.get(i).getBoardNum() + " " + list.get(i).getTitle() + " " + list.get(i).getContent() + " " + list.get(i).getViewCnt() + " " + list.get(i).getWriterId() + " " + list.get(i).getWrDate() + " " +list.get(i).getRecommend());
-//				
-//			}
-//			System.out.println();
-//		}
-//	}
+
 	
 	public void createBoard(int part, String content) {
 		List<Board> list = BoardDAO.getInstance().searchBoard(part, content);
@@ -114,8 +95,8 @@ public class BoardService {
 	//검색, 추천, 내가쓴거 게시판 틀(전체 게시판 제외)
 	public void getBoard(List<Board> list, int lastPage) {
 		System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-		System.out.println("│                                                   게  시  판 ㅁ                                                        │");
-		System.out.println("|  no     제목                  내용                                        댓글수 조회수  작성자 id      작성일자      추천수   |");
+		System.out.println("│                                                   게  시  판                                                           │");
+		System.out.println("|  id     제목                  내용                                        댓글수 조회수  작성자 id       작성일자        추천수   |");
 		System.out.println("========================================================================================================================");
 		
 		if(list.size() == 0) {
@@ -270,7 +251,7 @@ public class BoardService {
 		}
 		if(list.size()<5) {
 			for(int i=list.size()+1; i<=5; i++) {
-				System.out.println("| " + i + "번째 글 없음                                                                                                         │");
+				System.out.println("| " + i + "번째 글 없음                                                                                                           │");
 				
 			}
 		}
@@ -336,7 +317,7 @@ public class BoardService {
 			System.out.println("등록하신 댓글이 없습니다.");
 		} else {
 			for(int i=0; i<list.size(); i++) {
-				System.out.println("등록한 댓글의 고유 번호 : " + list.get(i).getCommentNum() + "등록한 댓글 내용 : " + list.get(i).getContent());
+				System.out.println("등록한 댓글의 고유 번호 : " + list.get(i).getCommentNum() + "         등록한 댓글 내용 : " + list.get(i).getContent());
 			}
 			System.out.println("삭제하실 댓글의 고유 번호를 입력해주세요>");
 			int commentNum = Integer.parseInt(sc.nextLine());
@@ -369,7 +350,7 @@ public class BoardService {
 			System.out.println("등록하신 대댓글이 없습니다.");
 		} else {
 			for(int i=0; i<list.size(); i++) {
-				System.out.println("등록한 대댓글의 고유 번호 : " + list.get(i).getRecommentNum() + "등록한 대댓글 내용 : " + list.get(i).getContent());
+				System.out.println("등록한 대댓글의 고유 번호 : " + list.get(i).getRecommentNum() + "           등록한 대댓글 내용 : " + list.get(i).getContent());
 			}
 			System.out.println("삭제하실 대댓글의 고유 번호를 입력해주세요>");
 			int recommentNum = Integer.parseInt(sc.nextLine());
@@ -611,11 +592,11 @@ public class BoardService {
 			
 			if(board.getViewCnt() >= 5) {
 				System.out.println("✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏");
-				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			} else if(board.getViewCnt() >= 1) {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			} else {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			}
 			System.out.println();
 			
@@ -636,11 +617,11 @@ public class BoardService {
 			
 			if(board.getViewCnt() >= 5) {
 				System.out.println("✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏");
-				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			} else if(board.getViewCnt() >= 1) {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			} else {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getWrDate());
+				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
 			}
 			System.out.println();
 			
@@ -660,7 +641,13 @@ public class BoardService {
 			System.out.println("댓글------------------------------------------------------------------------------------------------------------");
 			for(int i=0; i<list.size(); i++) {
 				
-				System.out.println(list.get(i).getContent() + "         ( id : " + list.get(i).getWriterId() + "   댓글작성일 : " + list.get(i).getWrDate() + "   댓글번호 : " + list.get(i).getCommentNum() + " )");
+				if(list.get(i).getStatus().equals("X")) {
+					System.out.println("삭제된 댓글입니다.");
+				} else {
+					System.out.println(list.get(i).getContent() + "         ( 작성자 : " + list.get(i).getWriterId() + "   댓글작성일 : " + list.get(i).getWrDate() + "   댓글번호 : " + list.get(i).getCommentNum() + " )");
+				}
+				
+				
 				List<ReReply> list2 = BoardDAO.getInstance().getReReply(list.get(i).getCommentNum());
 				if(list2.size()==0) {
 					System.out.println("등록된 대댓글이 없습니다.");
@@ -671,7 +658,7 @@ public class BoardService {
 							System.out.print("\t");
 						}
 						//System.out.println("작성자 id : " + list2.get(j).getWriterId() + " 작성일 : " + list2.get(j).getWrDate() + " 내용 : " + list2.get(j).getContent());
-						System.out.println("↳ " + list2.get(j).getContent() +"         ( id : " + list2.get(j).getWriterId() + "   대댓글작성일 : " + list2.get(j).getWrDate() + " )");
+						System.out.println("↳ " + list2.get(j).getContent() +"         ( 작성자 : " + list2.get(j).getWriterId() + "   대댓글작성일 : " + list2.get(j).getWrDate() + " )");
 					}
 				}
 			}
@@ -746,7 +733,17 @@ public class BoardService {
 		if(list.size()==0) {
 			System.out.println("대댓글을 달 댓글이 없습니다.");
 		} else {
-			System.out.println("대댓글을 달 댓글의 id 입력(숫자)>");
+			boolean flag2 = false;
+			for(int i = 0; i<list.size(); i++) {
+				if(list.get(i).getStatus().equals("O")) {
+					flag2 = true;
+				}
+			}
+			if(!flag2) {
+				System.out.println("대댓글을 달 댓글이 없습니다.");
+				return;
+			}
+			System.out.println("대댓글을 달 댓글의 번호 입력(숫자)>");
 			String commentId = sc.nextLine();
 			boolean flag = true;
 			
@@ -759,10 +756,15 @@ public class BoardService {
 			
 			if(flag) {
 				flag = false;
+				int spot = 0;
 				for(int i=0; i<list.size(); i++) {
 					if(Integer.parseInt(commentId) == list.get(i).getCommentNum()) {
 						flag = true;
+						spot = i;
 					}
+				}
+				if(list.get(spot).getStatus() == "X") {
+					flag = false;
 				}
 				
 				if(flag) {

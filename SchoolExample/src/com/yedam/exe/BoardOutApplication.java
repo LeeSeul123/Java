@@ -32,8 +32,15 @@ public class BoardOutApplication {
 				break;
 			case "3":
 				System.out.println("1. 제목 검색 | 2. 제목+내용 검색 | 3. 작성자 id");
-				System.out.println("검색할 부분을 선택해주세요 >");
-				int part = Integer.parseInt(sc.nextLine());
+				
+				String part1 = "";
+				while(!part1.equals("1") && !part1.equals("2") && !part1.equals("3")) {
+					System.out.println("검색할 부분을 선택해주세요 >");
+					part1 = sc.nextLine();
+				}
+				
+				
+				int part = Integer.parseInt(part1);
 				System.out.println("검색 내용을 입력해주세요 > ");
 				String content = sc.nextLine();
 				
@@ -47,7 +54,13 @@ public class BoardOutApplication {
 				}
 				break;
 			case "4":
-				bs.getMyreco();
+				List<Board> list2 = BoardDAO.getInstance().getMyreco();
+				if(list2 == null) {
+					System.out.println("추천한 게시글이 없습니다.");
+				} else {
+					new RecommendationApplication();
+				}
+				//bs.getMyreco();
 				break;
 			case "5":
 				//내가 쓴글/댓글삭제
@@ -67,6 +80,8 @@ public class BoardOutApplication {
 				System.out.println("뒤로가기 실행");
 				run = false;
 				break;
+			default :
+				System.out.println("잘못된 값 입력");
 			}
 		}
 	}
@@ -75,6 +90,7 @@ public class BoardOutApplication {
 		System.out.println("=======================================================================================");
 		System.out.println("1.전체 게시글 | 2.글쓰기 | 3.게시글 검색 | 4.내가 추천한글 보기 | 5.내가 쓴 글/댓글 삭제 | 6. 뒤로가기  ");
 		System.out.println("=======================================================================================");
+		System.out.println("번호 입력>");
 		selectNo = sc.nextLine();
 	}
 }

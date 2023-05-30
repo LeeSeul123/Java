@@ -37,11 +37,11 @@ public class SubjectDAO extends DAO{
 			Subject subject2 = null;
 			if(rs.next()) {
 				subject2 = new Subject();
-				
+				subject2.setProfessorId(rs.getString("professor_id"));
 			} 
 			  //등록 되어있지 않을경우, 등록할 과목의 시간 확인
 			if(subject2 !=null) {	
-				System.out.println("이미 등록된 과목");
+				System.out.println(subject2.getProfessorId() + "교수께서 이미 등록한 과목");
 			} else {
 				sql = "SELECT subject_starttime, subject_endtime, subject_week FROM subject WHERE subject_id = ?";
 				pstmt = conn.prepareStatement(sql);

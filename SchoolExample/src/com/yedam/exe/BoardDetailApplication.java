@@ -2,6 +2,8 @@ package com.yedam.exe;
 
 import java.util.Scanner;
 
+import com.yedam.board.Board;
+import com.yedam.board.BoardDAO;
 import com.yedam.board.BoardService;
 
 public class BoardDetailApplication {
@@ -27,7 +29,18 @@ public class BoardDetailApplication {
 				
 				bs.getPost2(boardNum);
 			} else {
-				bs.getPost(selectNo);
+				Board board = BoardDAO.getInstance().checkPost(selectNo);
+				if(board == null) {
+					System.out.println("해당 글 없음");
+					this.selectNo = 0;
+					this.boardNum = 0;
+					BoardService.currentBoard = null;
+					run = false;
+					return;
+				} else {
+					
+					bs.getPost(selectNo);
+				}
 			}
 			
 			bs.getReply();
@@ -50,7 +63,7 @@ public class BoardDetailApplication {
 				break;
 			case "3":
 				//추천 누르기
-				bs.getReply();
+				
 				if(bs.recoCheck()) {
 					bs.setReco();
 				} else {
