@@ -399,25 +399,25 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT count(comment_num)+count(recomment_num) FROM reply FULL OUTER JOIN rereply USING (comment_num) WHERE board_num = ?";
+			String sql = "SELECT count(recomment_num) FROM reply right JOIN rereply USING (comment_num) WHERE board_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				count = rs.getInt("count(comment_num)+count(recomment_num)");
+				count = rs.getInt("count(recomment_num)");
 			}
 			
-			sql = "SELECT count(comment_num) FROM reply WHERE board_num = ? AND status = 'X'";
+			sql = "SELECT count(comment_num) FROM reply WHERE board_num = ? AND status = 'O'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardNum);
 			rs = pstmt.executeQuery();
-			int minus = 0;
+			int plus = 0;
 			if(rs.next()) {
-				minus = rs.getInt("count(comment_num)");
+				plus = rs.getInt("count(comment_num)");
 			}
 			
-			count = count - minus;
+			count = count + plus;
 			
 		} catch(Exception e) {
 			e.printStackTrace();
