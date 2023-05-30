@@ -111,7 +111,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM recommendation JOIN board USING (board_num) WHERE member_id = ?";
+			String sql = "SELECT * FROM recommendation JOIN board USING (board_num) WHERE member_id = ? ORDER BY board_num DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, MemberService.memberInfo.getMemberId());
 			rs = pstmt.executeQuery();
@@ -142,7 +142,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM board WHERE writer_id = ?";
+			String sql = "SELECT * FROM board WHERE writer_id = ? ORDER BY board_num";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, MemberService.memberInfo.getMemberId());
 			rs = pstmt.executeQuery();
@@ -276,6 +276,9 @@ public class BoardDAO extends DAO{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, commentNum);
 			result = pstmt.executeUpdate();
+			
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -292,7 +295,7 @@ public class BoardDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM rereply WHERE writer_id= ?";
+			String sql = "SELECT * FROM rereply WHERE writer_id= ? ORDER BY recomment_num";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, MemberService.memberInfo.getMemberId());
 			rs = pstmt.executeQuery();
@@ -326,6 +329,25 @@ public class BoardDAO extends DAO{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, recommentNum);
 			result = pstmt.executeUpdate();
+			
+			
+			sql = "SELECT max(recomment_num) FROM rereply";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int max = 0;
+			if(rs.next()) {
+				max = rs.getInt("max(recomment_num)");
+			}
+			
+			int result2 = 0;
+			for(int i = recommentNum +1; i <= max; i++) {
+				sql = "UPDATE rereply SET recomment_num = recomment_num -1 WHERE recomment_num = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, i);
+				result2 = pstmt.executeUpdate();
+				
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

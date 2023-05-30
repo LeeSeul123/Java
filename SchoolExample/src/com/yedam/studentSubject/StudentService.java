@@ -55,11 +55,11 @@ public class StudentService {
 			}
 			System.out.println();
 		}
-		System.out.println("삭제할 과목 번호 입력> ");
+		
 		
 		String subjectId = "";
 		while(!subjectId.equals("1") && !subjectId.equals("2") && !subjectId.equals("3") && !subjectId.equals("4") && !subjectId.equals("5") && !subjectId.equals("6") && !subjectId.equals("7") && !subjectId.equals("8") && !subjectId.equals("9") && !subjectId.equals("10")) {
-			System.out.println("번호를 입력해주세요(겹치는 시간 불가능, 10학점 이상 불가능)>");
+			System.out.println("삭제할 과목 번호 입력> ");
 			subjectId = sc.nextLine();
 		}
 		int result = StudentSubjectDAO.getInstance().deleteSubject(Integer.parseInt(subjectId));

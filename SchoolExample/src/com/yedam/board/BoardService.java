@@ -92,12 +92,12 @@ public class BoardService {
 	}
 	
 	
-	//검색, 추천, 내가쓴거 게시판 틀(전체 게시판 제외)
+	//검색, 추천게시판 틀(전체 게시판 제외)
 	public void getBoard(List<Board> list, int lastPage) {
-		System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-		System.out.println("│                                                   게  시  판                                                           │");
-		System.out.println("|  id     제목                  내용                                        댓글수 조회수  작성자 id       작성일자        추천수   |");
-		System.out.println("========================================================================================================================");
+		System.out.println("┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+		System.out.println("│                                                         게  시  판                                                                  │");
+		System.out.println("|  id    제목                        내용                                         댓글수 조회수  작성자 id      작성일자       추천수  |");
+		System.out.println("=======================================================================================================================================");
 		
 		if(list.size() == 0) {
 			System.out.println("등록된 게시글이 없습니다.");
@@ -127,27 +127,27 @@ public class BoardService {
 				} else if(korean == 9) {
 					System.out.printf("  %-11s    ", list.get(i).getTitle());
 				} else if(korean == 8) {
-					System.out.printf("  %-11s    ", list.get(i).getTitle());
+					System.out.printf("  %-12s    ", list.get(i).getTitle());
 				} else if(korean ==7) {
-					System.out.printf("  %-12s    ", list.get(i).getTitle());
+					System.out.printf("  %-13s    ", list.get(i).getTitle());
 				} else if(korean == 6) {
-					System.out.printf("  %-12s    ", list.get(i).getTitle());
+					System.out.printf("  %-14s    ", list.get(i).getTitle());
 				} else if(korean == 5) {
-					System.out.printf("  %-13s    ", list.get(i).getTitle());
-				} else if(korean == 4) {
-					System.out.printf("  %-13s    ", list.get(i).getTitle());
-				} else if(korean == 3) {
-					System.out.printf("  %-14s    ", list.get(i).getTitle());
-				} else if(korean == 2) {
-					System.out.printf("  %-14s    ", list.get(i).getTitle());
-				} else if(korean == 1) {
 					System.out.printf("  %-15s    ", list.get(i).getTitle());
+				} else if(korean == 4) {
+					System.out.printf("  %-15s    ", list.get(i).getTitle());
+				} else if(korean == 3) {
+					System.out.printf("  %-16s    ", list.get(i).getTitle());
+				} else if(korean == 2) {
+					System.out.printf("  %-18s    ", list.get(i).getTitle());
+				} else if(korean == 1) {
+					System.out.printf("  %-19s    ", list.get(i).getTitle());
 				} else if(korean == 0) {
 					if(list.get(i).getTitle().length() > 17) {
 						title = list.get(i).getTitle().substring(0, 17) + "..";
 						System.out.print("  " + title);
 					}else {
-						System.out.printf("  %-16s   ", list.get(i).getTitle());																		
+						System.out.printf("  %-20s   ", list.get(i).getTitle());																		
 					}
 				}
 				
@@ -165,99 +165,90 @@ public class BoardService {
 					}
 				}
 				
-				if(korean2 >= 29) {
-					content = list.get(i).getContent().substring(0, 28) + "..";
-					System.out.print("  " + content);
-				} else if(korean2 == 29) {
-					System.out.printf("  %-26s   ",list.get(i).getContent());
-				} else if(korean2 == 28) {
-					System.out.printf("  %-26s   ", list.get(i).getContent());
-				} else if(korean2 == 27) {
-					System.out.printf("  %-27s   ", list.get(i).getContent());
-				} else if(korean2 == 26) {
-					System.out.printf("  %-27s   ", list.get(i).getContent());
-				} else if(korean2 == 25) {
-					System.out.printf("  %-28s   ", list.get(i).getContent());
-				} else if(korean2 == 24) {
-					System.out.printf("  %-28s   ", list.get(i).getContent());
+				
+				if(korean2 >= 23) {
+					content = list.get(i).getContent().substring(0, 22) + "..";
+					System.out.print("  " + content + "  ");
 				} else if(korean2 == 23) {
-					System.out.printf("  %-29s   ", list.get(i).getContent());
+					System.out.printf("  %-21s  ",list.get(i).getContent());
 				} else if(korean2 == 22) {
-					System.out.printf("  %-29s   ", list.get(i).getContent());
+					System.out.printf("  %-22s   ", list.get(i).getContent());
 				} else if(korean2 == 21) {
-					System.out.printf("  %-30s   ", list.get(i).getContent());
+					System.out.printf("  %-23s   ", list.get(i).getContent());
 				} else if(korean2 == 20) {
-					System.out.printf("  %-30s   ", list.get(i).getContent());
+					System.out.printf("  %-24s   ", list.get(i).getContent());
 				} else if(korean2 == 19) {
-					System.out.printf("  %-31s   ", list.get(i).getContent());
+					System.out.printf("  %-25s   ", list.get(i).getContent());
 				} else if(korean2 == 18) {
-					System.out.printf("  %-31s   ", list.get(i).getContent());
+					System.out.printf("  %-26s   ", list.get(i).getContent());
 				} else if(korean2 == 17) {
-					System.out.printf("  %-32s   ", list.get(i).getContent());
+					System.out.printf("  %-27s   ", list.get(i).getContent());
 				} else if(korean2 == 16) {
-					System.out.printf("  %-32s   ", list.get(i).getContent());
+					System.out.printf("  %-28s   ", list.get(i).getContent());
 				} else if(korean2 == 15) {
-					System.out.printf("  %-33s   ", list.get(i).getContent());
+					System.out.printf("  %-29s   ", list.get(i).getContent());
 				} else if(korean2 == 14) {
-					System.out.printf("  %-33s   ", list.get(i).getContent());
+					System.out.printf("  %-30s   ", list.get(i).getContent());
 				} else if(korean2 == 13) {
-					System.out.printf("  %-34s   ", list.get(i).getContent());
+					System.out.printf("  %-31s   ", list.get(i).getContent());
 				} else if(korean2 == 12) {
-					System.out.printf("  %-34s   ", list.get(i).getContent());
+					System.out.printf("  %-32s   ", list.get(i).getContent());
 				} else if(korean2 == 11) {
-					System.out.printf("  %-35s   ", list.get(i).getContent());			
+					System.out.printf("  %-33s   ", list.get(i).getContent());
 				} else if(korean2 == 10) {
-					System.out.printf("  %-35s    ", list.get(i).getContent());			
+					System.out.printf("  %-34s   ", list.get(i).getContent());
 				} else if(korean2 == 9) {
-					System.out.printf("  %-36s   ", list.get(i).getContent());			
+					System.out.printf("  %-35s   ", list.get(i).getContent());
 				} else if(korean2 == 8) {
-					System.out.printf("  %-36s    ", list.get(i).getContent());			
+					System.out.printf("  %-36s   ", list.get(i).getContent());
 				} else if(korean2 == 7) {
-					System.out.printf("  %-37s   ", list.get(i).getContent());			
+					System.out.printf("  %-37s   ", list.get(i).getContent());
 				} else if(korean2 == 6) {
-					System.out.printf("  %-37s    ", list.get(i).getContent());			
+					System.out.printf("  %-38s   ", list.get(i).getContent());
 				} else if(korean2 == 5) {
 					System.out.printf("  %-38s   ", list.get(i).getContent());			
 				} else if(korean2 == 4) {
-					System.out.printf("  %-38s    ", list.get(i).getContent());			
-				} else if(korean2 == 3) {
-					System.out.printf("  %-39s   ", list.get(i).getContent());			
-				} else if(korean2 == 2) {
 					System.out.printf("  %-39s    ", list.get(i).getContent());			
+				} else if(korean2 == 3) {
+					System.out.printf("  %-41s   ", list.get(i).getContent());			
+				} else if(korean2 == 2) {
+					System.out.printf("  %-41s    ", list.get(i).getContent());			
 				} else if(korean2 == 1) {
-					System.out.printf("  %-40s   ", list.get(i).getContent());			
+					System.out.printf("  %-43s   ", list.get(i).getContent());			
 				} else if(korean2 == 0) {
-					if(list.get(i).getContent().length() > 42) {
-						content = list.get(i).getContent().substring(0, 42) + "..";
+					if(list.get(i).getContent().length() > 30) {
+						content = list.get(i).getContent().substring(0, 30) + "..";
 						System.out.print("  " + content);
 					}else {
-						System.out.printf("  %-41s   ", list.get(i).getContent());																		
+						System.out.printf("  %-44s   ", list.get(i).getContent());																		
 					}
 				}
 				
+				
+				
 				//댓글수 출력
-				System.out.printf("   %-3s", getCountReply(list.get(i).getBoardNum()));
+				System.out.printf("   %-3s ", getCountReply(list.get(i).getBoardNum()));
 				//조회수 출력
-				System.out.printf("  %-3s", list.get(i).getViewCnt());
+				System.out.printf("  %-3s  ", list.get(i).getViewCnt());
 				//작성자 id출력
-				System.out.printf("   %-8s", list.get(i).getWriterId());
+				System.out.printf("   %-8s  ", list.get(i).getWriterId());
 				//작성일자 출력
 				System.out.printf("   %-10s   ", list.get(i).getWrDate());
 				//추천수 출력
-				System.out.printf(" %3s    |", list.get(i).getRecommend());
+				System.out.printf("    %3s    |", list.get(i).getRecommend());
 				System.out.println();
 			}
 				
 		}
 		if(list.size()<5) {
 			for(int i=list.size()+1; i<=5; i++) {
-				System.out.println("| " + i + "번째 글 없음                                                                                                           │");
+				System.out.println("| " + i + "번째 글 없음                                                                                                                        │");
 				
 			}
 		}
 		
 		
-		System.out.println("└─────────────────────────────────────────────────────"+ (currentPage+1) + " / " + lastPage +"────────────────────────────────────────────────────────────┘");
+		System.out.println("└─────────────────────────────────────────────────────────────"+ (currentPage+1) + " / " + lastPage +"────────────────────────────────────────────────────────────────────┘");
 		
 	}
 	
@@ -283,7 +274,7 @@ public class BoardService {
 			System.out.println("등록하신 게시글이 없습니다.");
 		} else {
 			for(int i=0; i<list.size(); i++) {
-				System.out.println("등록한 게시글의 고유 번호 : " + list.get(i).getBoardNum() + "등록한 게시글의 제목 : " + list.get(i).getTitle());
+				System.out.println("등록한 게시글의 고유 번호 : " + list.get(i).getBoardNum() + "         등록한 게시글의 제목 : " + list.get(i).getTitle());
 			}
 			System.out.println("삭제하실 게시글의 고유 번호를 입력해주세요>");
 			int boardNum = Integer.parseInt(sc.nextLine());
@@ -382,11 +373,10 @@ public class BoardService {
 	
 	//게시판 틀
 	public void getStartTle() {
-		System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-		System.out.println("│                                                   게  시  판 ㅁ                                                        │");
-		System.out.println("|  no     제목                  내용                                        댓글수 조회수  작성자 id      작성일자      추천수   |");
-		System.out.println("========================================================================================================================");
-		//System.out.println("│  no  |        제목        |                       내용                       |댓글수|조회수|  작성자id  |     작성일자     |추천수|");
+		System.out.println("┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+		System.out.println("│                                                         게  시  판                                                                  │");
+		System.out.println("|  no    제목                        내용                                         댓글수 조회수  작성자 id      작성일자       추천수 |");
+		System.out.println("=======================================================================================================================================");
 	}
 		
 	//게시판의 내용출력
@@ -413,34 +403,34 @@ public class BoardService {
 				}
 				
 				if(korean >= 11) {
-					title = list.get(i).getTitle().substring(0, 10) + "...";
-					System.out.print("  " + title + " ");
+					title = list.get(i).getTitle().substring(0, 10) + "..";
+					System.out.print("  " + title );
 				} else if(korean == 10) {
 					System.out.printf("  %-10s    ",list.get(i).getTitle());
 				} else if(korean == 9) {
 					System.out.printf("  %-11s    ", list.get(i).getTitle());
 				} else if(korean == 8) {
-					System.out.printf("  %-11s    ", list.get(i).getTitle());
+					System.out.printf("  %-12s       ", list.get(i).getTitle());
 				} else if(korean ==7) {
-					System.out.printf("  %-12s    ", list.get(i).getTitle());
+					System.out.printf("  %-13s    ", list.get(i).getTitle());
 				} else if(korean == 6) {
-					System.out.printf("  %-12s    ", list.get(i).getTitle());
+					System.out.printf("  %-14s    ", list.get(i).getTitle());
 				} else if(korean == 5) {
-					System.out.printf("  %-13s    ", list.get(i).getTitle());
+					System.out.printf("  %-15s   ", list.get(i).getTitle());
 				} else if(korean == 4) {
-					System.out.printf("  %-13s    ", list.get(i).getTitle());
-				} else if(korean == 3) {
-					System.out.printf("  %-14s    ", list.get(i).getTitle());
-				} else if(korean == 2) {
-					System.out.printf("  %-14s    ", list.get(i).getTitle());
-				} else if(korean == 1) {
 					System.out.printf("  %-15s    ", list.get(i).getTitle());
+				} else if(korean == 3) {
+					System.out.printf("  %-16s    ", list.get(i).getTitle());
+				} else if(korean == 2) {
+					System.out.printf("  %-18s    ", list.get(i).getTitle());
+				} else if(korean == 1) {
+					System.out.printf("  %-19s    ", list.get(i).getTitle());
 				} else if(korean == 0) {
 					if(list.get(i).getTitle().length() > 17) {
 						title = list.get(i).getTitle().substring(0, 17) + "..";
 						System.out.print("  " + title);
 					}else {
-						System.out.printf("  %-16s   ", list.get(i).getTitle());																		
+						System.out.printf("  %-20s   ", list.get(i).getTitle());																		
 					}
 				}
 				
@@ -458,93 +448,83 @@ public class BoardService {
 					}
 				}
 				
-				if(korean2 >= 29) {
-					content = list.get(i).getContent().substring(0, 28) + "..";
-					System.out.print("  " + content);
-				} else if(korean2 == 29) {
-					System.out.printf("  %-26s   ",list.get(i).getContent());
-				} else if(korean2 == 28) {
-					System.out.printf("  %-26s   ", list.get(i).getContent());
-				} else if(korean2 == 27) {
-					System.out.printf("  %-27s   ", list.get(i).getContent());
-				} else if(korean2 == 26) {
-					System.out.printf("  %-27s   ", list.get(i).getContent());
-				} else if(korean2 == 25) {
-					System.out.printf("  %-28s   ", list.get(i).getContent());
-				} else if(korean2 == 24) {
-					System.out.printf("  %-28s   ", list.get(i).getContent());
+				if(korean2 >= 23) {
+					content = list.get(i).getContent().substring(0, 22) + "..";
+					System.out.print("  " + content + " ");
 				} else if(korean2 == 23) {
-					System.out.printf("  %-29s   ", list.get(i).getContent());
+					System.out.printf("  %-21s  ",list.get(i).getContent());
 				} else if(korean2 == 22) {
-					System.out.printf("  %-29s   ", list.get(i).getContent());
+					System.out.printf("  %-22s   ", list.get(i).getContent());
 				} else if(korean2 == 21) {
-					System.out.printf("  %-30s   ", list.get(i).getContent());
+					System.out.printf("  %-23s   ", list.get(i).getContent());
 				} else if(korean2 == 20) {
-					System.out.printf("  %-30s   ", list.get(i).getContent());
+					System.out.printf("  %-24s   ", list.get(i).getContent());
 				} else if(korean2 == 19) {
-					System.out.printf("  %-31s   ", list.get(i).getContent());
+					System.out.printf("  %-25s   ", list.get(i).getContent());
 				} else if(korean2 == 18) {
-					System.out.printf("  %-31s   ", list.get(i).getContent());
+					System.out.printf("  %-26s   ", list.get(i).getContent());
 				} else if(korean2 == 17) {
-					System.out.printf("  %-32s   ", list.get(i).getContent());
+					System.out.printf("  %-27s   ", list.get(i).getContent());
 				} else if(korean2 == 16) {
-					System.out.printf("  %-32s   ", list.get(i).getContent());
+					System.out.printf("  %-28s   ", list.get(i).getContent());
 				} else if(korean2 == 15) {
-					System.out.printf("  %-33s   ", list.get(i).getContent());
+					System.out.printf("  %-29s   ", list.get(i).getContent());
 				} else if(korean2 == 14) {
-					System.out.printf("  %-33s   ", list.get(i).getContent());
+					System.out.printf("  %-30s   ", list.get(i).getContent());
 				} else if(korean2 == 13) {
-					System.out.printf("  %-34s   ", list.get(i).getContent());
+					System.out.printf("  %-31s   ", list.get(i).getContent());
 				} else if(korean2 == 12) {
-					System.out.printf("  %-34s   ", list.get(i).getContent());
+					System.out.printf("  %-32s   ", list.get(i).getContent());
 				} else if(korean2 == 11) {
-					System.out.printf("  %-35s   ", list.get(i).getContent());			
+					System.out.printf("  %-33s   ", list.get(i).getContent());
 				} else if(korean2 == 10) {
-					System.out.printf("  %-35s    ", list.get(i).getContent());			
+					System.out.printf("  %-34s   ", list.get(i).getContent());
 				} else if(korean2 == 9) {
-					System.out.printf("  %-36s   ", list.get(i).getContent());			
+					System.out.printf("  %-35s   ", list.get(i).getContent());
 				} else if(korean2 == 8) {
-					System.out.printf("  %-36s    ", list.get(i).getContent());			
+					System.out.printf("  %-36s   ", list.get(i).getContent());
 				} else if(korean2 == 7) {
-					System.out.printf("  %-37s   ", list.get(i).getContent());			
+					System.out.printf("  %-37s   ", list.get(i).getContent());
 				} else if(korean2 == 6) {
-					System.out.printf("  %-37s    ", list.get(i).getContent());			
+					System.out.printf("  %-38s   ", list.get(i).getContent());
 				} else if(korean2 == 5) {
-					System.out.printf("  %-38s   ", list.get(i).getContent());			
-				} else if(korean2 == 4) {
 					System.out.printf("  %-38s    ", list.get(i).getContent());			
-				} else if(korean2 == 3) {
-					System.out.printf("  %-39s   ", list.get(i).getContent());			
-				} else if(korean2 == 2) {
+				} else if(korean2 == 4) {
 					System.out.printf("  %-39s    ", list.get(i).getContent());			
+				} else if(korean2 == 3) {
+					System.out.printf("  %-41s   ", list.get(i).getContent());			
+				} else if(korean2 == 2) {
+					System.out.printf("  %-41s    ", list.get(i).getContent());			
 				} else if(korean2 == 1) {
-					System.out.printf("  %-40s   ", list.get(i).getContent());			
-				} else if(korean2 == 0) {
-					if(list.get(i).getContent().length() > 42) {
-						content = list.get(i).getContent().substring(0, 42) + "..";
+					System.out.printf("  %-43s   ", list.get(i).getContent());			
+				}  else if(korean2 == 0) {
+					if(list.get(i).getContent().length() > 30) {
+						content = list.get(i).getContent().substring(0, 30) + "..";
 						System.out.print("  " + content);
 					}else {
-						System.out.printf("  %-41s   ", list.get(i).getContent());																		
+						System.out.printf("  %-44s   ", list.get(i).getContent());																		
 					}
 				}
 				
+				
+				
 				//댓글수 출력
-				System.out.printf("   %-3s", getCountReply(list.get(i).getBoardNum()));
+				System.out.printf("   %-3s ", getCountReply(list.get(i).getBoardNum()));
 				//조회수 출력
-				System.out.printf("  %-3s", list.get(i).getViewCnt());
+				System.out.printf("  %-3s  ", list.get(i).getViewCnt());
 				//작성자 id출력
-				System.out.printf("   %-8s", list.get(i).getWriterId());
+				System.out.printf("   %-8s  ", list.get(i).getWriterId());
 				//작성일자 출력
 				System.out.printf("   %-10s   ", list.get(i).getWrDate());
 				//추천수 출력
-				System.out.printf(" %3s    |", list.get(i).getRecommend());
+				System.out.printf("    %3s    |", list.get(i).getRecommend());
 				System.out.println();
 			}
 				
 		}
 		if(list.size()<BoardInApplication.pageSize) {
 			for(int i=list.size()+1; i<=BoardInApplication.pageSize; i++) {
-				System.out.println("| " + i + "번째 글 없음                                                                                                         │");
+				System.out.println("| " + i + "번째 글 없음                                                                                                                        │");
 				
 			}
 		}
@@ -552,7 +532,7 @@ public class BoardService {
 		
 	public void getEndTle() {
 		int lastPage = getLastPage();
-		System.out.println("└─────────────────────────────────────────────────────"+ (currentPage+1) + " / " + lastPage +"────────────────────────────────────────────────────────────┘");
+		System.out.println("└─────────────────────────────────────────────────────────────"+ (currentPage+1) + " / " + lastPage +"───────────────────────────────────────────────────────────────────┘");
 	}
 	
 	//댓글 수 구하기
@@ -590,14 +570,8 @@ public class BoardService {
 			//System.out.println(board.getBoardNum() + " " + board.getTitle() + " " + board.getContent() + " " + board.getViewCnt() + " " + board.getWriterId() + " " + board.getWrDate() + " " +board.getRecommend());
 			//게시글 번호
 			
-			if(board.getViewCnt() >= 5) {
-				System.out.println("✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏");
-				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			} else if(board.getViewCnt() >= 1) {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			} else {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			}
+			System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + "    ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
+			
 			System.out.println();
 			
 			System.out.println("글 제목 : " + board.getTitle());
@@ -615,14 +589,8 @@ public class BoardService {
 			//System.out.println(board.getBoardNum() + " " + board.getTitle() + " " + board.getContent() + " " + board.getViewCnt() + " " + board.getWriterId() + " " + board.getWrDate() + " " +board.getRecommend());
 			//게시글 번호
 			
-			if(board.getViewCnt() >= 5) {
-				System.out.println("✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏");
-				System.out.println("게시글 id> " + board.getBoardNum() + "번    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😁   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			} else if(board.getViewCnt() >= 1) {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😃 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			} else {
-				System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + " 😐 ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
-			}
+			System.out.println("게시글 id> " + board.getBoardNum() + "    ||    작성자id> " + board.getWriterId() + "    ||    조회수> " + board.getViewCnt() + "   ||    작성일자> " + board.getWrDate() + "    ||    추천수> " + board.getRecommend());
+			
 			System.out.println();
 			
 			System.out.println("글 제목 : " + board.getTitle());
@@ -636,9 +604,9 @@ public class BoardService {
 	public void getReply() {
 		List<Reply> list = BoardDAO.getInstance().getReply();
 		if(list.size() == 0) {
-			System.out.println("등록된 댓글이 없습니다 😅 ");
+			System.out.println("등록된 댓글이 없습니다  ");
 		} else {
-			System.out.println("댓글------------------------------------------------------------------------------------------------------------");
+			System.out.println("==================================================================================================================");
 			for(int i=0; i<list.size(); i++) {
 				
 				if(list.get(i).getStatus().equals("X")) {
@@ -650,7 +618,7 @@ public class BoardService {
 				
 				List<ReReply> list2 = BoardDAO.getInstance().getReReply(list.get(i).getCommentNum());
 				if(list2.size()==0) {
-					System.out.println("등록된 대댓글이 없습니다.");
+					System.out.println();
 				} else {
 					
 					for(int j=0; j<list2.size(); j++) {
@@ -658,12 +626,12 @@ public class BoardService {
 							System.out.print("\t");
 						}
 						//System.out.println("작성자 id : " + list2.get(j).getWriterId() + " 작성일 : " + list2.get(j).getWrDate() + " 내용 : " + list2.get(j).getContent());
-						System.out.println("↳ " + list2.get(j).getContent() +"         ( 작성자 : " + list2.get(j).getWriterId() + "   대댓글작성일 : " + list2.get(j).getWrDate() + " )");
+						System.out.println("|-> " + list2.get(j).getContent() +"         ( 작성자 : " + list2.get(j).getWriterId() + "   대댓글작성일 : " + list2.get(j).getWrDate() + " )");
 					}
 				}
 			}
 		}
-		System.out.println("✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏✏");
+		System.out.println("==================================================================================================================");
 	}
 	
 	//추천하기 or 추천취소

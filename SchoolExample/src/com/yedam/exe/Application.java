@@ -16,9 +16,9 @@ public class Application {
 	private void start() {
 		boolean run = true;
 		while(run) {
-			System.out.println("==========🎈🎈 학생관리 프로그램 🎈🎈==========");
+			System.out.println("============ 학교 간이 프로그램 ============");
 			System.out.println("   1. 로그인   |   2. 회원가입   |   3.종료   ");
-			System.out.println("========================================");
+			System.out.println("============================================");
 			System.out.println("번호입력 > ");
 			selectNo = sc.nextLine();
 			switch(selectNo) {

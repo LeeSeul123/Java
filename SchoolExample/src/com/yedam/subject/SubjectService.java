@@ -34,7 +34,7 @@ public class SubjectService {
 		if(result > 0) {
 			System.out.println("수업 등록 성공");
 		} else {
-			System.out.println("수업 등록 실패 😰😰");
+			System.out.println("수업 등록 실패 ");
 		}
 	}
 	

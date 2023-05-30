@@ -47,7 +47,7 @@ public class MemberService {
 			int result = MemberDAO.getInstance().insertMember(member, who);
 			
 			if(result > 0) {
-				System.out.println("회원 가입 성공 😀😀");
+				System.out.println("회원 가입 성공");
 			} else {
 				System.out.println("회원 가입 실패");
 			}
