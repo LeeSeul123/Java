@@ -8,15 +8,8 @@
 </head>
 <body>
 <div align="center">
-	<div>
-		<jsp:include page="menu.jsp" />
-	</div>
-	<div>
-		<h1>Wellcome to My Web Site</h1>
-	</div>
-	<div>
-		<jsp:include page="footer.jsp"></jsp:include>
-	</div>
+	<jsp:include page="../main/menu.jsp" />
+	<h1>${message }</h1>
 </div>
 </body>
 </html>

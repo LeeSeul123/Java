@@ -1,16 +1,16 @@
-package co.micol.notice.main.command;
+package co.micol.notice.member.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.micol.notice.common.Command;
 
-public class MainCommand implements Command {
+public class MemberJoin implements Command {
 
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
-		// main.jsp 돌려주는 곳
-		return "main/main";
+		// 회원가입 폼을 돌려준다
+		return "member/memberInsert";
 	}
 
 }

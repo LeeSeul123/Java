@@ -7,16 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div align="center">
-	<div>
-		<jsp:include page="menu.jsp" />
-	</div>
-	<div>
-		<h1>Wellcome to My Web Site</h1>
-	</div>
-	<div>
-		<jsp:include page="footer.jsp"></jsp:include>
-	</div>
+<div>
+	<hr>
+	<h1> CopyWriter@micol aaa.comm @2023</h1>
 </div>
 </body>
 </html>
