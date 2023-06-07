@@ -10,6 +10,7 @@
 <div align="center">
 	<jsp:include page="../main/menu.jsp" />
 	<h1>${message }</h1>
+	<jsp:include page="../main/footer.jsp"></jsp:include>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <mapper namespace="co.micol.notice.service.NoticeMapper">
 	<select id="noticeSelectList" 
 		resultType="co.micol.notice.service.NoticeVO">
-		SELECT * FROM NOTICE
+		SELECT * FROM NOTICE ORDER BY NOTICE_ID DESC 
 	</select>
 	<select id="noticeSelect"
 		parameterType="co.micol.notice.service.NoticeVO" 
@@ -13,11 +13,21 @@
 	</select>
 	<insert id="noticeInsert"
 		parameterType="co.micol.notice.service.NoticeVO">
+		<selectKey keyProperty="noticeId" resultType="int" order="BEFORE">
+			SELECT MAX(NOTICE_ID) + 1 AS noticeId FROM NOTICE
+		</selectKey>
 		INSERT INTO NOTICE
 		VALUES(#{noticeId},#{noticeWriter},#{noticeTitle},#{noticeSubject},#{noticeWdate},0)
 	</insert>
-	<update id="noticeUpdate">
-	
+	<update id="noticeUpdate" parameterType="co.micol.notice.service.NoticeVO">
+		UPDATE NOTICE
+		<set>
+			<if test="noticeWriter != null">NOTICE_WRITER = #{noticeWriter},</if>
+			<if test="noticeTitle != null">NOTICE_TITLE =  #{noticeTitle},</if>
+			<if test="noticeWdate != null">NOTICE_WDATE = #{noticeWdate},</if>
+			<if test="noticeSubject != null">NOTICE_SUBJECT = #{noticeSubject}</if>
+		</set>
+		WHERE NOTICE_ID = #{noticeId}
 	</update>
 	<delete id="noticeDelete">
 		DELETE FROM NOTICE

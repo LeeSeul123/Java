@@ -24,7 +24,7 @@
 				<li><a class="menuLink" href="memberLoginForm.do">Login</a></li>
 			</c:if>
 			<c:if test="${not empty id }">
-				<li><a class="menuLink" href="#">Logout</a></li>
+				<li><a class="menuLink" href="memberLogout.do">Logout</a></li>
 			</c:if>
 			<c:if test="${not empty name }">
 				<li><a class="menuLink" href="#">${name }님 로그인</a></li>
